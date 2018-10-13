@@ -1,1 +1,44 @@
+import csv 
+import os
+#Path to file
+file_to_load = os.path.join("..", "election_data.csv")
 
+totalVotes = 0
+candidateNames = []
+canditateVotes = {}
+winningCandidate = ""
+winningCount = 0
+
+#read csv convert to list of dictionaries 
+with open(file_to_load) as electiont_data:
+    reader = csv.DictReader(electiont_data, delimiter=',')
+    header = next(reader)
+
+    for row in reader:
+    
+    #total of votes 
+        totalVotes = totalVotes + 1
+        candidate = row["Candidate"]
+        if candidate not in candidateNames:
+            candidateNames.append(candidate)
+            canditateVotes[candidate] = 0
+        canditateVotes[candidate] = canditateVotes[candidate] + 1
+    for nominee in canditateVotes:
+        votes = canditateVotes.get(nominee)   
+        votePercentage = float(votes)/float(totalVotes) * 100
+        if (votes > winningCount): 
+            winningCount = votes
+            winningCandidate = nominee
+        voterOutput = f"{nominee}: {votePercentage} ({votes})"
+        print(voterOutput)
+    
+    print(winningCandidate)
+    print(winningCount)        
+    print(candidate)
+    print(canditateVotes)
+    print(totalVotes)  
+    print(votePercentage)  
+
+    
+   
+    
