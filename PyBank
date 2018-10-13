@@ -1,1 +1,50 @@
+import csv 
+import os
+import re
+
+total_months = 0
+total_revenue = 0
+previous_revenue = 0
+monthly_change = 0
+highest_inc_rev = 0
+lowest_dec_rev = 0
+#List to store revenue change
+revenue_change = []
+
+#Path to file
+file_to_load = os.path.join("..", "budget_data.csv")
+
+#read csv convert to list of dictionaries 
+with open(file_to_load) as budget_data:
+    reader = csv.reader(budget_data, delimiter=',')
+    header = next(reader)
+
+    for row in reader: 
+
+        total_months = total_months + 1
+
+        total_revenue = total_revenue + int(re.search("[0,9]",row[1]))
+         return(total_revenue)
+        monthly_change = int(row[1]) - previous_revenue
+        previous_revenue = int(row[1])
+    
+        revenue_change.append(monthly_change)   
+
+        avg_revenue_change = round(sum(revenue_change)/total_months)
+        if (monthly_change > highest_inc_rev):
+         highest_month = [0]
+         highest_inc_rev = monthly_change
+        if( monthly_change < lowest_dec_rev):    
+         lowest_dec_month =  row[0]
+         lowest_dec_rev = monthly_change
+
+         
+
+print(total_months)
+print(total_revenue)
+print(avg_revenue_change)
+print(highest_inc_rev)
+print(lowest_dec_rev)
+
+
 
